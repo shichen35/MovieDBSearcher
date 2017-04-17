@@ -2,20 +2,26 @@
 //  AppDelegate.swift
 //  MovieDBSearcher
 //
-//  Created by Chen Shi on 4/14/17.
+//  Created by Chen Shi on 4/13/17.
 //  Copyright © 2017 Chen Shi. All rights reserved.
 //
 
 import UIKit
+import Alamofire
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    static let reachabilityManager = NetworkReachabilityManager(host: "www.apple.com")
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        AppDelegate.reachabilityManager?.listener = { status in
+            print("Current Network Status is: \(status)")
+        }
+        
+        AppDelegate.reachabilityManager?.startListening()
         return true
     }
 
