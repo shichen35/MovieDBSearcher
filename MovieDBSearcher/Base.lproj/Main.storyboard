@@ -31,7 +31,7 @@
                                         <rect key="frame" x="0.0" y="28" width="414" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gt3-Pi-ufC" id="d4I-Pj-4f6">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="79.666666666666671"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c79-Ek-w4J">
@@ -155,7 +155,7 @@
                                     <constraint firstAttribute="height" constant="30" id="DDq-b9-uj0"/>
                                     <constraint firstAttribute="width" constant="30" id="Jhg-eN-NT2"/>
                                 </constraints>
-                                <state key="normal" image="chevron-up"/>
+                                <state key="normal" title="Back to top" image="chevron-up"/>
                                 <connections>
                                     <action selector="scrollToTop:" destination="f2s-Dw-oJ9" eventType="touchUpInside" id="ALY-7b-mP3"/>
                                 </connections>
@@ -310,7 +310,7 @@ multiple-lines</string>
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dpt-Hz-E6f" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="z7a-oc-XOH">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="z7a-oc-XOH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     static let reachabilityManager = NetworkReachabilityManager(host: "www.apple.com")
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        // Reachability manager, if network status changes, log new status
         AppDelegate.reachabilityManager?.listener = { status in
             print("Current Network Status is: \(status)")
         }

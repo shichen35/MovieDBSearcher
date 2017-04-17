@@ -20,12 +20,20 @@ class ViewController: UIViewController {
     var movieArray = [MovieObject]()
     var queryStr = ""
     var totalResults = 0
-    var totalPages = 1
+    var totalPages = 0
     var loadedPages = 0
     var isLoading = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureView();
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    func configureView() {
         searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "Find movies by title"
         definesPresentationContext = true
@@ -33,36 +41,27 @@ class ViewController: UIViewController {
         tableView.tableHeaderView = searchController.searchBar
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
     func load(isNewSearch: Bool) {
         if isLoading {
             return
         }
-        
         if isNewSearch {
             movieArray.removeAll()
-            DispatchQueue.main.async {
-                self.tableView.setContentOffset(CGPoint(x: 0, y: -self.tableView.contentInset.top), animated: false)
-                self.tableView.reloadData()
-            }
+            tableView.setContentOffset(CGPoint(x: 0, y: -self.tableView.contentInset.top), animated: false)
+            tableView.reloadData()
             loadedPages = 0
-            totalPages = 1
+            totalPages = 0
             totalResults = 0
             queryStr = searchController.searchBar.text!
-        }
-        
-        if loadedPages >= totalPages || queryStr == "" {
+        }else if loadedPages >= totalPages || queryStr == "" {
             return
         }
         queryStr = queryStr.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
-        let url = isNewSearch ? "https://api.themoviedb.org/3/search/movie?api_key=cd1b2e1f7ac5a8c23c78a55c28747049&query=\(queryStr)&page=1" : "https://api.themoviedb.org/3/search/movie?api_key=cd1b2e1f7ac5a8c23c78a55c28747049&query=\(queryStr)&page=\(String(loadedPages + 1))"
+        let url = "https://api.themoviedb.org/3/search/movie?api_key=cd1b2e1f7ac5a8c23c78a55c28747049&query=\(queryStr)&page=\(String(loadedPages + 1))"
         
         isLoading = true
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        Alamofire.request(url).responseJSON { response in
+        Alamofire.request(url, method: .get, parameters: nil).responseJSON { response in
             self.isLoading = false
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             guard response.result.isSuccess else {
@@ -148,15 +147,15 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // check to display ScrollToTop button
-        btnScrollToTop.isHidden = scrollView.contentOffset.y > UIScreen.main.bounds.height / 2 ? false : true
+        // display ScrollToTop button when tableview scrolls down
+        btnScrollToTop.isHidden = scrollView.contentOffset.y > -tableView.contentInset.top ? false : true
 
-        // load more when tableview reach the bottom
+        // load more when tableview reaches the bottom
         // UITableView only moves in one direction, y axis
         let currentOffset = scrollView.contentOffset.y
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
         
-        // Change 10.0 to adjust the distance from bottom
+        // Change 10.0 to adjust the distance from bottom for lazy loading, together with cellForRowAt's lazy loading
         if maximumOffset - currentOffset <= 10.0 {
             load(isNewSearch: false)
         }
