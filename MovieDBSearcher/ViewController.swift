@@ -90,7 +90,6 @@ class ViewController: UIViewController {
             for movie in movieArr {
                 guard let newMovie = MovieObject.init(dict: movie) else {
                     // unexpected data
-                    self.totalResults -= 1
                     continue
                 }
                 self.movieArray.append(newMovie)
