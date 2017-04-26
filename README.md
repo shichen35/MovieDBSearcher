@@ -11,5 +11,11 @@ Show movie details when a list item is clicked.
 ### ScreenShots:
 
 ![Alt](/Screenshots/1.png "screen 1")
+
+***
+
 ![Alt](/Screenshots/2.png "screen 2")
+
+***
+
 ![Alt](/Screenshots/3.png "screen 3")
